@@ -4,7 +4,10 @@
     --accent-text-color: #434455;
     --helper-text-subtle: #8E8F99;
     --primary-white-color: #FFFFFF;
-    --hover-focus: #404BBF ;
+    --hover-focus: #404BBF;
+    --card-text-overlay: #F4F4FD;
+    --time-hover: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+        
 }
 body {
     font-family: 'Roboto', sans-serif;
@@ -31,6 +34,7 @@ button {
     padding: 16px 32px;
     border: 0px;
     border-radius: 4px;
+    cursor: pointer;
 }
 .list {
     list-style: none;
@@ -85,6 +89,20 @@ button {
 .logo-web {
     color: var(--primary-brand-color);
 }
+.current {
+    position: relative;
+}
+.current::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -27px;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--hover-focus);
+
+}
 .navigation-item {
     display: flex;
     align-items: center;
@@ -98,6 +116,7 @@ button {
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: 0.02em;
+    transition: color var(--time-hover);
 }
 .navigation-item .link:hover,
 .navigation-item .link:focus {
@@ -121,6 +140,7 @@ button {
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: 0.02em;
+    transition: color var(--time-hover);
 }
 .address-items .link:hover,
 .address-items .link:focus {
@@ -165,10 +185,10 @@ button {
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: 0.04em;
-    cursor: pointer;
     padding: 16px 32px;
     min-width: 169px;
-    min-height: 56px; 
+    min-height: 56px;
+    transition: background-color var(--time-hover);
 }
 .hero-btn:hover,
 .hero-btn:active {
@@ -315,6 +335,7 @@ button {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    transition: background-color var(--time-hover);
 }
 /* -----schimb culoare la icon -----*/
 .team-soc-icon {
@@ -374,6 +395,7 @@ button {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    transition: background-color var(--time-hover);
 }
 .social-links:is(:hover, :focus) {
     background-color: #31D0AA;
@@ -405,9 +427,12 @@ button {
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: 0.04em;
-    cursor: pointer;
     border-radius: 4px;
     border: 1px solid #E7E9FC;
+    transition: background-color var(--time-hover), 
+                color var(--time-hover), 
+                border var(--time-hover), 
+                box-shadow var(--time-hover);
 }
 .meniu-filters-btn:hover,
 .meniu-filters-btn:focus {
@@ -431,16 +456,41 @@ button {
 .project-items {
     flex-basis: calc((100% - 48px) / 3);
     box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08);
+    transition: box-shadow var(--time-hover);
 }
 .project-items:is(:hover, :focus) {
     box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08),
                 0px 1px 1px rgba(46, 47, 66, 0.16),
                 0px 2px 1px rgba(46, 47, 66, 0.08);
 }
+.project-cont-overlay {
+    position: relative;
+    overflow: hidden;
+}
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 40px 32px;
+    line-height: 1.5;
+    overflow: auto;
+    transform: translate(0, 100%);
+    transition: transform var(--time-hover);
+
+    color: var(--card-text-overlay);
+    background-color:#4D5AE5;
+}
+.project-links:is(:hover, :focus) .overlay {
+    transform: translate(0, 0);
+}
 .project-items-content {
     border: 1px solid #E7E9FC;
     border-top: 0;
     padding: 32px 0 32px 16px;
+    transition: border var(--time-hover), 
+                box-shadow var(--time-hover);
 }
 .project-items-content:is(:hover, :focus) {
     border: 1px solid #F4F4FD;
@@ -493,6 +543,8 @@ button {
     align-items: center;
     justify-content: center;
     color: var(--helper-text-subtle);
+    transition: border-color var(--time-hover), 
+                color var(--time-hover);
 }
 .customers-icon {
     fill: currentColor;
@@ -510,4 +562,61 @@ button {
     border-color: var(--hover-focus);
 } */
 
+/* ------------------------backdrop----------------------------------- */
 
+.backdrop {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: rgba(46, 47, 66, 0.4);
+    transition: opacity var(--time-hover), visibility var(--time-hover);
+}
+.backdrop.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: scale(1)translate(-50%, -50%);
+    padding: 24px;
+    width: 408px;
+    height: 576px;
+    background: #FCFCFC;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px 
+                rgba(0, 0, 0, 0.12), 0px 2px 1px 
+                rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    
+}
+.modal-btn-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #E7E9FC;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color var(--time-hover);
+}
+.close-icon {
+    fill: #000000;
+    transition: fill var(--time-hover);
+}
+.modal-btn-close:is(:hover, :focus) {
+    background-color: var(--hover-focus);
+}
+.modal-btn-close:is(:hover, :focus) > .close-icon {
+    fill: #FFFFFF;
+}
